@@ -38,6 +38,7 @@ drawMainContent = (data) => {
             <div class="col-md-12">
                   <div class="post-entry-horzontal" style="text-align: center;">
                     <a href="/posts/${item.id}" style="width: 100%;">
+                    <div class="image element-animate fadeIn element-animated" data-animate-effect="fadeIn" style="background-image: url(${item.previewImagePath==null || item.previewImagePath===""?'images/noimage.gif':item.previewImagePath});"></div>
                       <span class="text">
                         <div class="post-meta">
                           <span class="author mr-2"> ${item.account.userId} </span>&bullet;
