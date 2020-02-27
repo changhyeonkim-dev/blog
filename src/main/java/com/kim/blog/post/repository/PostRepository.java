@@ -16,4 +16,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<PostResponse> getAllBy(Pageable pageable);
 
     List<PostResponse> getAllByCategoryCategoryName(String categoryName, Pageable pageable);
+
+    List<PostResponse> getTop3ByOrderByViewsCountDesc();
 }

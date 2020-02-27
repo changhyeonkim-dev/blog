@@ -57,7 +57,7 @@ public class BlogRestController {
     @GetMapping("/posts/popular-list")
     @ResponseStatus(HttpStatus.OK)
     public List<PostResponse> getPopularList() {
-        return null;
+        return postRepository.getTop3ByOrderByViewsCountDesc();
     }
 
 
