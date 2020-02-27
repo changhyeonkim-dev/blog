@@ -15,7 +15,7 @@ spring:
       dialect: org.hibernate.dialect.MySQL8Dialect
   datasource:
     url: jdbc:mysql://localhost:3306/blog?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=true&serverTimezone=UTC
-    username: kimch
+    username: kim
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
   devtools:
