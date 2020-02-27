@@ -1,0 +1,85 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CH's Deblog</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/summernote-lite.js"></script>
+    <script src="/js/summernote-ko-KR.js"></script>
+    <link rel="stylesheet" href="/css/summernote-lite.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+</head>
+<body>
+<form action="/api/posts" class="user-ath-form" method="post">
+    <div class="input-item">
+        <input type="text" id="title" placeholder="title" class="input-bordered">
+    </div>
+    <div class="input-item">
+        <input type="text" id="category" placeholder="category" class="input-bordered">
+    </div>
+    <div id="summernote"></div>
+    <div class="d-flex justify-content-between align-items-center">
+        <button class="btn btn-primary" id="btn-save">저장하기</button>
+    </div>
+</form>
+</body>
+<script>
+    $(document).ready(function () {
+        $('#summernote').summernote({
+            height: 300,                 // 에디터 높이
+            minHeight: null,             // 최소 높이
+            maxHeight: null,             // 최대 높이
+            focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+            lang: "ko-KR",				// 한글 설정
+            callbacks: {
+                onImageUpload: (files) => {
+                    uploadImage(files);
+                    alert('이미지 업로드 성공!');
+                }
+            }
+        });
+    });
+    $("#btn-save").on("click", (e) => {
+        e.preventDefault();
+        let data = {};
+        data["title"] = $("#title").val();
+        data["contents"] = $('#summernote').summernote('code');
+        data["category"] = $("#category").val();
+        $.ajax({
+            url: "/api/posts",
+            method: "post",
+            contentType: "application/json;charset=UTF-8",
+            data: JSON.stringify(data),
+            success: function (result) {
+                console.log("result:", result);
+            },
+            error: function (e) {
+                alert('에러가 발생 하였습니다.' + e);
+                console.log("error:", e);
+            }
+        });
+    });
+
+    uploadImage = async (files) => {
+        let data = new FormData;
+        data.append("image", files[0]);
+        await $.ajax({
+            url: "/api/image", //컨트롤러 URL
+            data: data,
+            processData: false,
+            contentType: false,
+            method: "post",
+            success: (result) => {
+                console.log(result);
+                $(".note-editable").append(`<img src="${result}" class="img-fluid">`);
+            },
+            error: (error) => {
+                alert('에러가 발생하였습니다.');
+                console.log(error);
+            }
+        });
+    }
+
+</script>
+</html>
