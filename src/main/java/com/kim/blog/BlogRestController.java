@@ -41,7 +41,6 @@ public class BlogRestController {
     @ResponseStatus(HttpStatus.OK)
     public List<PostResponse> getPosts(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
                                         @RequestParam(name = "size", required = false, defaultValue = "5") int size) {
-
         return postRepository.getAllBy(PageRequest.of(page, size));
     }
 

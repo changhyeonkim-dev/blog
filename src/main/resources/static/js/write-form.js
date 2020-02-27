@@ -17,6 +17,7 @@ $("#btn-save").on("click", (e) => {
     let data = {};
     data["title"] = $("#title").val();
     data["contents"] = $('#summernote').summernote('code');
+    data["previewImagePath"] = $("#previewImagePath").val();
     $.ajax({
         url: "/api/posts",
         method: "post",
