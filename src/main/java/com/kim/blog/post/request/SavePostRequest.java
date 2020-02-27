@@ -11,4 +11,5 @@ public class SavePostRequest {
     private String title;
     private String contents;
     private String category;
+    private String previewImagePath;
 }

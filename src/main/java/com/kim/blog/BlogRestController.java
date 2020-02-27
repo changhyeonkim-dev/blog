@@ -70,7 +70,7 @@ public class BlogRestController {
                 .title(savePostRequest.getTitle())
                 .account(account)
                 .contents(savePostRequest.getContents())
-                .previewImagePath(null)
+                .previewImagePath(savePostRequest.getPreviewImagePath())
                 .category(categoryRepository.findByCategoryName(savePostRequest.getCategory()).orElseThrow(IllegalArgumentException::new))
                 .build();
         postService.savePost(post);
