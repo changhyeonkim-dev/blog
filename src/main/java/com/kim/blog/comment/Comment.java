@@ -1,8 +1,9 @@
-package com.kim.blog.post;
+package com.kim.blog.comment;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kim.blog.BaseAuditor;
 import com.kim.blog.account.Account;
+import com.kim.blog.post.Post;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 

@@ -1,6 +1,7 @@
-package com.kim.blog.post;
+package com.kim.blog.category;
 
 import com.kim.blog.BaseAuditor;
+import com.kim.blog.post.Post;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 

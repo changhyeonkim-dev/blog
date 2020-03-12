@@ -78,4 +78,9 @@ public class BlogController {
         return "writeForm";
     }
 
+    @GetMapping("/map/masks")
+    public String masks(){
+        return "masks";
+    }
+
 }

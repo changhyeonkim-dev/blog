@@ -2,12 +2,12 @@ package com.kim.blog;
 
 import com.kim.blog.account.Account;
 import com.kim.blog.post.Post;
-import com.kim.blog.post.repository.CategoryRepository;
+import com.kim.blog.category.repository.CategoryRepository;
 import com.kim.blog.post.repository.PostRepository;
 import com.kim.blog.post.request.SavePostRequest;
 import com.kim.blog.post.response.PostResponse;
 import com.kim.blog.post.service.PostService;
-import com.kim.blog.post.util.FileUploader;
+import com.kim.blog.util.FileUploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;

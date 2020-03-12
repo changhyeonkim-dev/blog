@@ -20,14 +20,11 @@ drawContent = (data) => {
     $("#post-content-body").html(data.contents);
     for (let i = 0; i < data.comments.length; i++) {
         $("#comment-list").append(`
-            <li class="comment">
+            <li id="comment" class="comment">
                 <div class="comment-body">
-                    <h3>Jean Doe</h3>
-                    <div class="meta">January 9, 2018 at 2:21pm</div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum
-                        necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim
-                        sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                    <p><a href="#" class="reply rounded">Reply</a></p>
+                    <h3>${data.comments[i].account.userId}</h3>
+                    <div class="meta">${data.comments[i].createdTime}</div>
+                    <p>${data.comments[i].commentContents}</p>
                 </div>
             </li>
         `);
@@ -35,5 +32,11 @@ drawContent = (data) => {
     console.log(data);
 };
 
-
-getPost($("#post-id").val());
+axios.get("/api/posts/"+$("#post-id").val())
+    .then((response)=>{
+        if(response.status!==200){
+            alert('에러 발생');
+            return;
+        }
+        drawContent(response.data);
+    });

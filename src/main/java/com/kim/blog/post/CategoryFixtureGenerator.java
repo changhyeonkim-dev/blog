@@ -1,6 +1,7 @@
 package com.kim.blog.post;
 
-import com.kim.blog.post.repository.CategoryRepository;
+import com.kim.blog.category.Category;
+import com.kim.blog.category.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

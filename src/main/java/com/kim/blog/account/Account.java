@@ -1,7 +1,7 @@
 package com.kim.blog.account;
 
 import com.kim.blog.BaseAuditor;
-import com.kim.blog.post.Comment;
+import com.kim.blog.comment.Comment;
 import com.kim.blog.post.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

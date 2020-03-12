@@ -3,6 +3,8 @@ package com.kim.blog.post;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kim.blog.BaseAuditor;
 import com.kim.blog.account.Account;
+import com.kim.blog.category.Category;
+import com.kim.blog.comment.Comment;
 import lombok.*;
 
 import javax.persistence.*;
