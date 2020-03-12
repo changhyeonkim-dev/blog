@@ -75,7 +75,6 @@ function drawMarkers(data){
         const marker = new google.maps.Marker({
             map: map,
             position: {lat:data.stores[i].lat,lng:data.stores[i].lng},
-            animation: google.maps.Animation.DROP,
             icon:{
                 url : url
             }
@@ -117,22 +116,9 @@ function addressSearch(){
 
 
 function getLocation() {
-    console.log(navigator.geolocation);
-    if (navigator.geolocation) { // GPS를 지원하면
-        navigator.geolocation.getCurrentPosition(function(position) {
-            getMasksInfomation(position.coords.latitude,position.coords.longitude,1000);
-            console.log(position.coords.latitude);
-            console.log(position.coords.longitude);
-        }, function(error) {
-            console.error(error);
-        }, {
-            enableHighAccuracy: false,
-            maximumAge: 0,
-            timeout: Infinity
-        });
-    } else {
-        alert('GPS를 지원하지 않습니다');
-    }
+    navigator.geolocation.getCurrentPosition((pos)=>{
+        getMasksInfomation(pos.coords.latitude,pos.coords.longitude,1000);
+    });
 }
 
 getLocation();
