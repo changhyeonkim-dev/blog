@@ -1,7 +1,7 @@
 let map, infoWindow;
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 37.5012823, lng: 126.7496159},
+        center: {lat: 37.566672, lng: 126.8784},
         zoom: 16
     });
 
@@ -15,7 +15,7 @@ function initMap() {
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
+            const pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
@@ -114,3 +114,25 @@ function addressSearch(){
         }
     });
 }
+
+
+function getLocation() {
+    console.log(navigator.geolocation);
+    if (navigator.geolocation) { // GPS를 지원하면
+        navigator.geolocation.getCurrentPosition(function(position) {
+            getMasksInfomation(position.coords.latitude,position.coords.longitude,1000);
+            console.log(position.coords.latitude);
+            console.log(position.coords.longitude);
+        }, function(error) {
+            console.error(error);
+        }, {
+            enableHighAccuracy: false,
+            maximumAge: 0,
+            timeout: Infinity
+        });
+    } else {
+        alert('GPS를 지원하지 않습니다');
+    }
+}
+
+getLocation();
