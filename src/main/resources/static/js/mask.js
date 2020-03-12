@@ -1,4 +1,4 @@
-let map, infoWindow;
+let map;
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 37.566672, lng: 126.8784},
@@ -6,12 +6,9 @@ function initMap() {
     });
 
     map.addListener('dragend', ()=> {
-        draggedCenterLocation = map.mapUrl.substring(map.mapUrl.indexOf('ll=')+3,map.mapUrl.indexOf('&z='));
-        getMasksInfomation(draggedCenterLocation.split(',')[0],draggedCenterLocation.split(',')[1],1000);
+        getMasksInfomation(map.getCenter().lat(),map.getCenter().lng(),1000);
     });
 
-
-    infoWindow = new google.maps.InfoWindow;
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -19,24 +16,11 @@ function initMap() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-            infoWindow.setPosition(pos);
             map.setCenter(pos);
-        }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-        });
-    } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
+        })
     }
 }
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    // infoWindow.setPosition(pos);
-    // infoWindow.setContent(browserHasGeolocation ?
-    //     'Error: The Geolocation service failed.' :
-    //     'Error: Your browser doesn\'t support geolocation.');
-    // infoWindow.open(map);
-}
 
 function getMasksInfomation(lat,lng,m){
     axios.get(`https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat=${lat}&lng=${lng}&m=${m}`)
@@ -47,6 +31,7 @@ function getMasksInfomation(lat,lng,m){
 
 
 let markers = [];
+let infowindows = [];
 function drawMarkers(data){
     console.log(data);
     for (let i = 0; i < markers.length; i++) {
@@ -93,6 +78,7 @@ function drawMarkers(data){
         marker.addListener('click', function() {
             infowindow.open(map, marker);
         });
+        infowindows.push(infowindow);
         markers.push(marker);
     }
 }
@@ -101,24 +87,23 @@ function drawMarkers(data){
 function addressSearch(){
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode({'address':$("#search-address").val()}, function(result, status) {
-        console.log(result[0].geometry);
         const pos = {
             lat: result[0].geometry.location.lat(),
             lng: result[0].geometry.location.lng()
         };
         if(status === 'OK'){
             getMasksInfomation(result[0].geometry.location.lat(),result[0].geometry.location.lng(),1000);
-            infoWindow.setPosition(pos);
             map.setCenter(pos);
         }
     });
 }
 
 
-function getLocation() {
+function getCurrentLocation() {
     navigator.geolocation.getCurrentPosition((pos)=>{
         getMasksInfomation(pos.coords.latitude,pos.coords.longitude,1000);
+        map.setCenter({lat:pos.coords.latitude,lng:pos.coords.longitude});
     });
 }
 
-getLocation();
+getCurrentLocation();
