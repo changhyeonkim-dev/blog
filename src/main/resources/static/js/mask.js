@@ -1,7 +1,8 @@
 let map;
 function initMap() {
+    getMasksInfomation(37.566672,126.9784,1000);
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 37.566672, lng: 126.8784},
+        center: {lat: 37.566672, lng: 126.9784},
         zoom: 16
     });
 
