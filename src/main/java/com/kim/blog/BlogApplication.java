@@ -3,10 +3,10 @@ package com.kim.blog;
 import com.kim.blog.account.Account;
 import com.kim.blog.account.Role;
 import com.kim.blog.account.repository.AccountRepository;
-import com.kim.blog.config.AccountPasswordEncoder;
 import com.kim.blog.category.Category;
 import com.kim.blog.category.repository.CategoryRepository;
-import com.kim.blog.post.service.PostService;
+import com.kim.blog.config.AccountPasswordEncoder;
+import com.kim.blog.config.SchedulerComponent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -21,11 +21,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class BlogApplication implements ApplicationRunner {
 
-    private final PostService postService;
     private final AccountRepository accountRepository;
     private final AccountPasswordEncoder accountPasswordEncoder;
 
     private final CategoryRepository categoryRepository;
+
+    private final SchedulerComponent schedulerComponent;
 
     public static void main(String[] args) {
         SpringApplication.run(BlogApplication.class, args);
@@ -56,6 +57,7 @@ public class BlogApplication implements ApplicationRunner {
                     .categoryName("pictures")
                     .build());
         }
+        schedulerComponent.setDailyPopularPosts();
 
     }
 

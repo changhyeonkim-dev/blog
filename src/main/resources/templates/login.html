@@ -4,20 +4,42 @@
     <title>CH's Deblog</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+
 </head>
 <body>
-<form action="login" method="post">
-    <div class="row">
-        <div class="col-md-12 form-group">
-            <label for="username">id</label>
-            <input type="text" id="username" name="username" class="form-control ">
-        </div>
-        <div class="col-md-12 form-group">
-            <label for="password">password</label>
-            <input type="password" id="password" name="password" class="form-control ">
-        </div>
+<!--<form action="login" method="post">-->
+    <!--<div class="row">-->
+        <!--<div class="col-md-12 form-group">-->
+            <!--<label for="username">id</label>-->
+            <!--<input type="text" id="username" name="username" class="form-control ">-->
+        <!--</div>-->
+        <!--<div class="col-md-12 form-group">-->
+            <!--<label for="password">password</label>-->
+            <!--<input type="password" id="password" name="password" class="form-control ">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<button type="submit" class="btn btn-warning">Login!</button>-->
+<!--</form>-->
+
+
+<div class="body" style="padding-top: 150px;">
+    <div class="border rounded shadow login-center">
+        <form style="padding-top: 32px;" action="login" method="post">
+            <!--<div class="form-group text-center"><img class="img-fluid" style="width: 100px;" src="default.png" /></div>-->
+            <div class="form-group d-flex justify-content-center"><input id="username" name="username" class="form-control" type="text" style="width: 200px;" placeholder="Email" /></div>
+            <div class="form-group d-flex justify-content-center"><input class="form-control" id="password" name="password" type="password" style="width: 200px;" placeholder="Password" /></div>
+            <div class="form-group d-flex justify-content-center"><button type="submit" class="btn btn-dark" style="width: 200px;" >로그인</button></div>
+            <div class="form-group d-flex justify-content-center"><a href="/join" class="btn btn-dark" style="width: 200px;" >회원가입</a></div>
+        </form>
     </div>
-    <button type="submit" class="btn btn-warning">Login</button>
-</form>
+</div>
+
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/js/jquery-migrate-3.0.0.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 </body>
 </html>

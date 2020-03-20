@@ -10,7 +10,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       dialect: org.hibernate.dialect.MySQL8Dialect
   datasource:
@@ -36,6 +36,19 @@ spring:
       max-request-size: 50MB
       max-file-size: 20MB
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: memoryby.com@gmail.com
+    password: memoryby!@#$
+    properties:
+      mail:
+        smtp:
+          auth: true
+          startttls:
+            enable: true
+
+
 
 
 cloud:
@@ -49,6 +62,7 @@ cloud:
       useDefaultAwsCredentialsChain: true
     stack:
       auto: false
+
 
 
 

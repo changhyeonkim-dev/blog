@@ -32,6 +32,14 @@ dependencies {
     implementation 'commons-io:commons-io:2.6'
     implementation 'org.modelmapper:modelmapper:2.3.0'
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.1.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework:spring-context-support'
+//    implementation 'com.sun.mail:javax.mail'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'it.ozimov:embedded-redis:0.7.2'
+    implementation 'commons-io:commons-io:2.6'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
@@ -44,6 +52,8 @@ dependencies {
     testImplementation 'org.springframework.batch:spring-batch-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+
 }
 
 test {

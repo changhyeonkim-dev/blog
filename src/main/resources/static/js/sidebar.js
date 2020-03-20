@@ -35,3 +35,4 @@ drawPopularContent = (data) => {
 
 
 getPopularPosts();
+

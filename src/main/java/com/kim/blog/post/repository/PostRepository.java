@@ -2,7 +2,7 @@ package com.kim.blog.post.repository;
 
 import com.kim.blog.post.Post;
 import com.kim.blog.post.response.PostResponse;
-import org.springframework.data.domain.PageRequest;
+import com.kim.blog.post.response.PostResponseDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -3,10 +3,7 @@ package com.kim.blog.account;
 import com.kim.blog.BaseAuditor;
 import com.kim.blog.comment.Comment;
 import com.kim.blog.post.Post;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,26 +36,26 @@ public class Account extends BaseAuditor implements UserDetails, Serializable {
 
     private String selfDescription;
 
-    @OneToMany(mappedBy = "account",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private List<Post> postList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "account",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private List<Comment> commentList = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Setter
     private Role role;
+
+
+    private String checkValidEmailToken;
 
 
     @Override
     @Transient
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        if(userId!=null && userId.equals("admin")){
-            grantedAuthorities.add(new SimpleGrantedAuthority(Role.ADMIN.name()));
-        }else{
-            grantedAuthorities.add(new SimpleGrantedAuthority(Role.GUEST.name()));
-        }
+        grantedAuthorities.add(new SimpleGrantedAuthority(this.role.name()));
         return grantedAuthorities;
     }
 
@@ -90,6 +87,10 @@ public class Account extends BaseAuditor implements UserDetails, Serializable {
     @Transient
     public boolean isEnabled() { //사용가능한 계정인지 의미
         return true;
+    }
+
+    public void generateEmailToken() {
+        this.checkValidEmailToken = UUID.randomUUID().toString();
     }
 
 }

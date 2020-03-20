@@ -16,6 +16,7 @@ getPost = (id) => {
 drawContent = (data) => {
     $("#post-created-date").html(data.createdTime);
     $("#post-comments-count").html('<span class="fa fa-comments"></span>&nbsp'+ data.comments.length);
+    $("#comment-amount").html(data.comments.length !==0 ?data.comments.length+" 개의 댓글이 있습니다" : '');
     $("#post-title").html(data.title);
     $("#post-content-body").html(data.contents);
     for (let i = 0; i < data.comments.length; i++) {
@@ -40,3 +41,33 @@ axios.get("/api/posts/"+$("#post-id").val())
         }
         drawContent(response.data);
     });
+
+$("#div-reply-submit").on("click",(e)=>{
+    e.preventDefault();
+    if(replyValidation()){
+        const token = document.cookie.split(';').filter((item)=>item.trim().startsWith('X-AUTH-TOKEN=')).toString().split('X-AUTH-TOKEN=')[1];
+        axios.post(`/api/posts/${$("#post-id").val()}/reply`,{contents:$("#reply-text").val()},{ headers: {"X-AUTH-TOKEN" : `${token}`}}).then(res => {
+            console.log(res.data)
+        })
+    }
+});
+
+function replyValidation(){
+    const replyText = $("#reply-text").val();
+    if(replyText.length <3){
+        alert('3글자 이상 입력해주세요');
+        return false;
+    }
+    return true;
+}
+
+getToken=() =>{
+    const name = "X-AUTH-TOKEN";
+    const value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return value? value[2] : null;
+};
+
+if(getToken() === null){
+    $("#reply-text").attr("readonly",true);
+    $("#reply-text").on("click",()=>alert('로그인 후 사용 가능합니다'));
+}

@@ -23,27 +23,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().disable()
                 .formLogin()
+                .loginPage("/login")
                 .permitAll()
                 .successForwardUrl("/sign-in")
                 .and()
                 .authorizeRequests()
                     .antMatchers("/css/**", "/images/**", "/js/**").permitAll()
-                    .antMatchers(HttpMethod.GET,"/write-form").hasAuthority(Role.ADMIN.name())
-                    .antMatchers(HttpMethod.POST).hasAuthority(Role.ADMIN.name())
-                    .antMatchers(HttpMethod.PUT).hasAuthority(Role.ADMIN.name())
-                    .antMatchers(HttpMethod.DELETE).hasAuthority(Role.ADMIN.name())
+//                    .antMatchers(HttpMethod.GET,"/write-form").hasAuthority(Role.ADMIN.name())
+//                    .antMatchers(HttpMethod.POST,"/api/post/**/reply").hasAnyAuthority(Role.ADMIN.name(),Role.GUEST.name())
+//                    .antMatchers(HttpMethod.PUT).hasAuthority(Role.ADMIN.name())
+//                    .antMatchers(HttpMethod.DELETE).hasAuthority(Role.ADMIN.name())
                         .anyRequest().permitAll()
                 .and()
                     .logout()
                         .logoutSuccessUrl("/")
-                        .deleteCookies("JSESSIONID")
+                        .deleteCookies("JSESSIONID","X-AUTH-TOKEN")
                 .and()
                     .sessionManagement()
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); // jwt token 필터를 id/password 인증 필터 전에 넣는다
-
-
     }
 
     @Override

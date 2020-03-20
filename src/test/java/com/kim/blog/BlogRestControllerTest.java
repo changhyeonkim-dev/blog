@@ -3,10 +3,10 @@ package com.kim.blog;
 
 import com.kim.blog.account.Account;
 import com.kim.blog.account.repository.AccountRepository;
+import com.kim.blog.category.repository.CategoryRepository;
 import com.kim.blog.comment.Comment;
 import com.kim.blog.post.CategoryFixtureGenerator;
 import com.kim.blog.post.Post;
-import com.kim.blog.category.repository.CategoryRepository;
 import com.kim.blog.post.repository.PostRepository;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -15,8 +15,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,9 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 

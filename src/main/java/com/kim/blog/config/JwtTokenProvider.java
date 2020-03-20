@@ -34,8 +34,8 @@ public class JwtTokenProvider {
     }
 
     // Jwt 토큰 생성
-    public String createToken(String userPk, List<String> roles) {
-        Claims claims = Jwts.claims().setSubject(userPk); // claim 정보에 회원을 구분할 수 있는 값을 세팅하였다가 토큰이 들어오면 해당 값으로 회원을 구분하여 리소스를 제공하면 됩니다
+    public String createToken(String userId, List<String> roles) {
+        Claims claims = Jwts.claims().setSubject(userId); // claim 정보에 회원을 구분할 수 있는 값을 세팅하였다가 토큰이 들어오면 해당 값으로 회원을 구분하여 리소스를 제공하면 됩니다
         claims.put("roles", roles);
         Date now = new Date();
         return Jwts.builder()
@@ -48,12 +48,12 @@ public class JwtTokenProvider {
 
     // Jwt 토큰으로 인증 정보를 조회
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserId(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     // Jwt 토큰에서 회원 구별 정보 추출
-    public String getUserPk(String token) {
+    public String getUserId(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 

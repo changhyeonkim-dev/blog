@@ -1,16 +1,19 @@
 package com.kim.blog;
 
 import com.kim.blog.account.Account;
-import com.kim.blog.post.Post;
 import com.kim.blog.category.repository.CategoryRepository;
+import com.kim.blog.post.Post;
 import com.kim.blog.post.repository.PostRepository;
 import com.kim.blog.post.request.SavePostRequest;
 import com.kim.blog.post.response.PostResponse;
+import com.kim.blog.post.response.PostResponseDto;
 import com.kim.blog.post.service.PostService;
-import com.kim.blog.util.FileUploader;
+import com.kim.blog.util.file.FileUploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +32,7 @@ public class BlogRestController {
     private final PostRepository postRepository;
     private final CategoryRepository categoryRepository;
     private final FileUploader fileUploader;
+    private final RedisTemplate<String, PostResponseDto> postRedisTemplate;
 
 
     @GetMapping("/posts/{id}")
@@ -40,24 +44,25 @@ public class BlogRestController {
     @GetMapping("/posts")
     @ResponseStatus(HttpStatus.OK)
     public List<PostResponse> getPosts(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
-                                        @RequestParam(name = "size", required = false, defaultValue = "5") int size) {
+                                       @RequestParam(name = "size", required = false, defaultValue = "5") int size) {
         return postRepository.getAllBy(PageRequest.of(page, size));
     }
 
     @GetMapping("/posts/categories/{categoryName}")
     @ResponseStatus(HttpStatus.OK)
     public List<PostResponse> getPostsInCategory(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
-                                                  @RequestParam(name = "size", required = false, defaultValue = "5") int size,
-                                                  @PathVariable("categoryName") String categoryName){
-
-        return postRepository.getAllByCategoryCategoryName(categoryName,PageRequest.of(page,size));
-
+                                                 @RequestParam(name = "size", required = false, defaultValue = "5") int size,
+                                                 @PathVariable("categoryName") String categoryName) {
+        return postRepository.getAllByCategoryCategoryName(categoryName, PageRequest.of(page, size));
     }
 
+    @SuppressWarnings("ConstantConditions")
     @GetMapping("/posts/popular-list")
     @ResponseStatus(HttpStatus.OK)
-    public List<PostResponse> getPopularList() {
-        return postRepository.getTop3ByOrderByViewsCountDesc();
+    public List<PostResponseDto> getPopularList() {
+        ListOperations<String, PostResponseDto> stringPostListOperations = postRedisTemplate.opsForList();
+        String key = "popular-list";
+        return stringPostListOperations.range(key, 0, -1);
     }
 
 

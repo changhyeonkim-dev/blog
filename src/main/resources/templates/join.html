@@ -1,0 +1,67 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chyunx.x</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300, 400,700|Inconsolata:400,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="/fonts/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="/fonts/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/fonts/flaticon/font/flaticon.css">
+
+    <!-- Theme Style -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/css/register.css">
+</head>
+<body>
+
+<!--<form th:object="${saveAccountRequest}" th:action="@{/api/account}" th:method="post">-->
+    <!--<span>userId</span><input type="text" th:field = "*{userId}">-->
+    <!--<span>password</span><input type="text" th:field = "*{password}">-->
+    <!--<button type="submit" value="회원가입">회원가입</button>-->
+<!--</form>-->
+
+<div>
+    <form id="form-signup" class="sign-up" novalidate th:object="${saveAccountRequest}" th:action="@{/api/account}" th:method="post" oninput="password2.setCustomValidity(password2.value != password.value ? $('#invalid-password').css('display','block'):$('#invalid-password').css('display','none'))">
+        <div class="form-row">
+            <div class="col-md-4 mb-3">
+                <label for="userId">이메일 주소</label>
+                <input type="text" class="form-control" id="userId" th:field = "*{userId}" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-4 mb-3">
+                <label for="password">비밀번호</label>
+                <input type="password"  class="form-control" id="password" name ="password" th:field = "*{password}" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-4 mb-3">
+                <label for="password2">비밀번호확인</label>
+                <input type="password" class="form-control" id="password2" name ="password2" required>
+            </div>
+        </div>
+        <div id="invalid-password" style="display: none;">
+            <p>패스워드가 일치하지 않습니다.</p>
+        </div>
+        <button class="btn btn-primary" type="submit">회원가입</button>
+    </form>
+</div>
+
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/js/jquery-migrate-3.0.0.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/join.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+</body>
+</html>

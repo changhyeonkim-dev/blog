@@ -1,4 +1,4 @@
-package com.kim.blog.util;
+package com.kim.blog.util.file;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;

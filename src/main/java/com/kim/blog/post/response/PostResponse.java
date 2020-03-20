@@ -33,4 +33,8 @@ public interface PostResponse {
 
     LocalDate getModifiedTime();
 
+    default PostResponseDto toPostResponseDtop(){
+        return new PostResponseDto(getId(),getTitle(),getContents(),getViewsCount(),getUp(),getDown(),getPreviewImagePath(),getCreatedTime(),getModifiedTime());
+    }
+
 }

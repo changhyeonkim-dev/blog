@@ -2,6 +2,7 @@ package com.kim.blog;
 
 import com.kim.blog.account.Account;
 import com.kim.blog.account.repository.AccountRepository;
+import com.kim.blog.account.request.SaveAccountRequest;
 import com.kim.blog.config.JwtTokenProvider;
 import com.kim.blog.post.repository.PostRepository;
 import com.kim.blog.post.service.PostService;
@@ -49,7 +50,7 @@ public class BlogController {
             Cookie cookie = new Cookie(cookieName, String.valueOf(true));
             cookie.setMaxAge(60*60);//1시간
             response.addCookie(cookie);
-            postService.increaseViews(postRepository.findById(id).orElseThrow(IllegalArgumentException::new));
+            postService.increaseViews(postRepository.findById(id).orElseThrow(EntityNotFoundException::new));
         }
         model.addAttribute("postId",id);
         return "detail";
@@ -58,14 +59,14 @@ public class BlogController {
     @PostMapping("/sign-in")
     public String signIn(@RequestParam String username, HttpServletResponse response) {
         Account account = accountRepository.findByUserId(username).orElseThrow(EntityNotFoundException::new);
-        String token = jwtTokenProvider.createToken(String.valueOf(account.getId()),
+        String token = jwtTokenProvider.createToken(String.valueOf(account.getUserId()),
                 account.getAuthorities().stream()
                         .map(GrantedAuthority::getAuthority)
                         .collect(Collectors.toList()));
         Cookie setCookie = new Cookie("X-AUTH-TOKEN", token); // 쿠키 이름을 name으로 생성
         setCookie.setMaxAge(60*60*24); // 기간을 하루로 지정
         response.addCookie(setCookie);
-        return "index";
+        return "redirect:/";
     }
 
     @GetMapping("/detail")
@@ -82,5 +83,16 @@ public class BlogController {
     public String masks(){
         return "masks";
     }
+
+    @GetMapping("/join")
+    public String join(Model model){
+        model.addAttribute("saveAccountRequest",new SaveAccountRequest());
+        return "join";
+    }
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
 
 }
