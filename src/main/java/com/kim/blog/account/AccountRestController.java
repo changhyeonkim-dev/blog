@@ -37,7 +37,7 @@ public class AccountRestController {
                 .role(Role.NONE)
                 .build();
         String emailToken = accountService.save(account);
-        emailService.sendMail(account.getUserId(),"memory-by 인증 메일 입니다","http://localhost:8080/valid-email-token?token="+emailToken+"&userId="+account.getUserId());
+        emailService.sendMail(account.getUserId(),"memory-by 인증 메일 입니다","http://memoryby.com/valid-email-token?token="+emailToken+"&userId="+account.getUserId());
     }
 
 }

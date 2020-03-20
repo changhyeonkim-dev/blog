@@ -27,6 +27,7 @@ public class SchedulerComponent {
         ListOperations<String, PostResponseDto> stringPostListOperations = postRedisTemplate.opsForList();
         List<PostResponse> top3ByOrderByViewsCountDesc = postRepository.getTop3ByOrderByViewsCountDesc();
         ArrayList<PostResponseDto> dtoList = (ArrayList<PostResponseDto>) top3ByOrderByViewsCountDesc.stream().map(PostResponse::toPostResponseDtop).collect(Collectors.toList());
+        postRedisTemplate.delete(key);
         stringPostListOperations.leftPushAll(key,dtoList);
         log.info("UpdatedPopularPosts");
     }
