@@ -11,6 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 public class InterceptorConfiguration implements WebMvcConfigurer {
+    
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+    }
+    
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new HandlerInterceptorAdapter() {
